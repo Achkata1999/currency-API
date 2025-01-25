@@ -1,4 +1,21 @@
 
+# Currency API Service
+
+This project is designed to handle currency data efficiently by integrating with external APIs, managing relational databases, providing REST and XML APIs, and utilizing RabbitMQ for request processing. Additionally, Redis caching is implemented to optimize database communication.
+
+
+## Features
+
+### 1. Currency Data Collection
+- Fetches real-time currency data from Fixer.io.
+- Stores the data in a relational database.
+- Updates currency data at predefined intervals (configured in the application).
+
+### 2. REST API Endpoints
+JSON API:
+
+- Supports two POST endpoints:
+  
 #### /json_api/current
 
 ```javascript
