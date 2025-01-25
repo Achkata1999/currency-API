@@ -7,7 +7,7 @@ This project is designed to handle currency data efficiently by integrating with
 ## Features
 
 ### 1. Currency Data Collection
-- Fetches real-time currency data from Fixer.io.
+- Fetches real-time currency data from [Fixer.io](https://fixer.io/).
 - Stores the data in a relational database.
 - Updates currency data at predefined intervals (configured in the application).
 
