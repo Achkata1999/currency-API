@@ -7,7 +7,6 @@ import demo.currency.model.web.response.ExchangeRateResponseWsDTO;
 import demo.currency.model.web.xml.Command;
 import demo.currency.model.web.xml.HelperClassXML;
 import demo.currency.service.ClientRequestService;
-import demo.currency.util.ControllerHelper;
 import demo.currency.util.ExchangeRateResponseHelper;
 import demo.currency.util.XMLHelper;
 import org.springframework.http.MediaType;
@@ -38,15 +37,9 @@ public class CurrencyRateXMLController extends BaseController {
         getClientRequestFacade()
                 .saveClientRequest(requestData.getRequestId(), requestData.getClientId(), SERVICE_API_NAME, requestData.getTimestamp());
 
-        if (command.getGet() != null) {
-            List<ExchangeRate> latestExchangeRates = getExchangeRateFacade()
-                    .getCurrencyExchangeRate(requestData.getCurrency());
+        List<ExchangeRate> currencyExchangeRate = getExchangeRateFacade()
+                .getCurrencyExchangeRateXML(command, requestData);
 
-            return ExchangeRateResponseHelper.buildListExchangeRateResponseWsDTO(latestExchangeRates);
-        }
-        List<ExchangeRate> historyExchangeRates = getExchangeRateFacade()
-                .getCurrencyExchangeRateByPeriod(requestData.getCurrency(), ControllerHelper.calculateHistoryPeriod(requestData.getPeriod()));
-
-        return ExchangeRateResponseHelper.buildListExchangeRateResponseWsDTO(historyExchangeRates);
+        return ExchangeRateResponseHelper.buildListExchangeRateResponseWsDTO(currencyExchangeRate);
     }
 }

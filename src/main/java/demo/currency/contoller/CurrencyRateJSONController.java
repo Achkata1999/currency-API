@@ -7,8 +7,8 @@ import demo.currency.model.web.json.CustomerRequestByPeriodWsDTO;
 import demo.currency.model.web.json.CustomerRequestWsDTO;
 import demo.currency.model.web.response.ExchangeRateResponseWsDTO;
 import demo.currency.service.ClientRequestService;
-import demo.currency.util.ControllerHelper;
 import demo.currency.util.ExchangeRateResponseHelper;
+import demo.currency.util.InstantHelper;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -45,7 +45,7 @@ public class CurrencyRateJSONController extends BaseController {
                 .saveClientRequest(customerRequestByPeriodWsDTO.getRequestId(), customerRequestByPeriodWsDTO.getClient(), SERVICE_API_NAME, Instant.ofEpochMilli(customerRequestByPeriodWsDTO.getTimestamp()));
 
         List<ExchangeRate> historyExchangeRates = getExchangeRateFacade()
-                .getCurrencyExchangeRateByPeriod(customerRequestByPeriodWsDTO.getCurrency(), ControllerHelper.calculateHistoryPeriod(customerRequestByPeriodWsDTO.getPeriod()));
+                .getCurrencyExchangeRateByPeriod(customerRequestByPeriodWsDTO.getCurrency(), InstantHelper.calculateHistoryPeriod(customerRequestByPeriodWsDTO.getPeriod()));
 
         return ExchangeRateResponseHelper.buildListExchangeRateResponseWsDTO(historyExchangeRates);
     }
