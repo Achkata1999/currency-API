@@ -2,7 +2,10 @@ package demo.currency.facade.impl;
 
 import demo.currency.facade.ExchangeRateFacade;
 import demo.currency.model.entity.ExchangeRate;
+import demo.currency.model.web.xml.Command;
+import demo.currency.model.web.xml.HelperClassXML;
 import demo.currency.service.ExchangeRateService;
+import demo.currency.util.InstantHelper;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -24,5 +27,13 @@ public class ExchangeRateFacadeImpl implements ExchangeRateFacade {
     @Override
     public List<ExchangeRate> getCurrencyExchangeRateByPeriod(String baseCurrency, Instant historyTime) {
         return exchangeRateService.findHistoryExchangeRates(baseCurrency, historyTime);
+    }
+
+    @Override
+    public List<ExchangeRate> getCurrencyExchangeRateXML(Command command, HelperClassXML requestData) {
+        if (command.getGet() != null) {
+            return getCurrencyExchangeRate(requestData.getCurrency());
+        }
+        return getCurrencyExchangeRateByPeriod(requestData.getCurrency(), InstantHelper.calculateHistoryPeriod(requestData.getPeriod()));
     }
 }
